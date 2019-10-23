@@ -1,0 +1,89 @@
+<!-- Bootstrap template used from https://getbootstrap.com/docs/4.3/getting-started/introduction/ -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <style>
+	#canvas{
+		border: solid 3px black;
+	}
+  </style>
+  <body>
+	<canvas id = "canvas"></canvas>
+	<input type="submit" value="Clear Canvas" onclick="clearCanvas(canvas,ctx);">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script>
+		// Draw on canvas adapted from https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse
+		var canvas = document.getElementById('canvas');
+
+		// set canvas context
+		var ctx = canvas.getContext('2d');
+		setupCanvas();
+
+		// last known position
+		var pos = { x: 0, y: 0 };
+
+		//add event listeners
+		window.addEventListener('setupCanvas', setupCanvas);
+		document.addEventListener('mousemove', draw);
+		document.addEventListener('mousedown', setPosition);
+		document.addEventListener('mouseenter', setPosition);
+
+		// new position from mouse event
+		function setPosition(e) {
+		  pos.x = e.clientX;
+		  pos.y = e.clientY;
+		}
+
+		// Setup canvas
+		function setupCanvas() {
+		  canvas.width  = 300;
+		  canvas.height = 250;
+		  canvas.id = "canvas";
+		}
+		
+		// adapted from: https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
+		function clearCanvas(canvas,ctx) {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		}
+
+		//function to draw in canvas
+		function draw(e) {
+		  // left mouse button must be pressed
+		  if (e.buttons !== 1) return;
+
+		  // begin/start area to draw on
+		  ctx.beginPath();
+
+		  //set drawn line width
+		  ctx.lineWidth = 5;
+		  
+		  //set rounded lines
+		  ctx.lineCap = 'round';
+		  
+		  //set drawing colour to black
+		  ctx.strokeStyle = 'black';
+
+		  //set position to mouse position
+		  ctx.moveTo(pos.x, pos.y); // from
+		  setPosition(e);
+		  ctx.lineTo(pos.x, pos.y); // to
+
+		  //draw line
+		  ctx.stroke();
+		}
+	</script>
+  </body>
+</html>
