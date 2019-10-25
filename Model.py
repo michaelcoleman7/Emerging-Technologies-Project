@@ -54,11 +54,14 @@ test_lbl =  np.array(list(test_lbl[ 8:])).astype(np.uint8)
 # Get model to make a prediction
 model.predict(test_img[5:6])
 
-# Test if image is correct
+# Test if image is showing on plot
 plt.imshow(test_img[5].reshape(28, 28), cmap='gray')
 # plt.show()
 
-
+# Test the model score and accuracy
+score = model.evaluate(inputs, outputs, verbose=0)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
 
 
 
