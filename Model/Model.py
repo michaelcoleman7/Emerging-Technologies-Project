@@ -20,10 +20,10 @@ model.add(kr.layers.Dense(units=10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 #Read in MNIST Data from dataset in folder /data
-with gzip.open('data/train-images-idx3-ubyte.gz', 'rb') as f:
+with gzip.open('MNIST Data Files/train-images-idx3-ubyte.gz', 'rb') as f:
     train_img = f.read()
 
-with gzip.open('data/train-labels-idx1-ubyte.gz', 'rb') as f:
+with gzip.open('MNIST Data Files/train-labels-idx1-ubyte.gz', 'rb') as f:
     train_lbl = f.read()
     
 # Initialize train images and labels
@@ -40,10 +40,10 @@ outputs = encoder.transform(train_lbl)
 
 model.fit(inputs, outputs, epochs=2, batch_size=100)
 
-with gzip.open('data/t10k-images-idx3-ubyte.gz', 'rb') as f:
+with gzip.open('MNIST Data Files/t10k-images-idx3-ubyte.gz', 'rb') as f:
     test_img = f.read()
 
-with gzip.open('data/t10k-labels-idx1-ubyte.gz', 'rb') as f:
+with gzip.open('MNIST Data Files/t10k-labels-idx1-ubyte.gz', 'rb') as f:
     test_lbl = f.read()
     
 test_img = ~np.array(list(test_img[16:])).reshape(10000, 784).astype(np.uint8) / 255.0
