@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request
 from PIL import Image
+import numpy as np
+import math
 from io import BytesIO
 import re, base64
 import matplotlib.pyplot as plt
+import cv2
 
 app = Flask(__name__)
 
@@ -25,6 +28,14 @@ def getImage():
     image_data = BytesIO(byte_data)
     # Convert to PIL Image
     img = Image.open(image_data)
+
+    img = img.save("predictImage.png")
+    imgcv2 = cv2.imread("predictImage.png")
+
+    # Convert img returned to greyscale
+    grayImg = cv2.cvtColor(imgcv2, cv2.COLOR_BGR2GRAY)
+
+
     return ''
 
 if __name__ == '__main__':
