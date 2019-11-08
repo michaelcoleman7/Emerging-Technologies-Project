@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>MNIST Image Predictor</title>
   </head>
   <style>
 	#canvas{
@@ -20,6 +20,10 @@
 	<canvas id = "canvas"></canvas>
 	<input type="submit" value="Clear Canvas" onclick="clearCanvas(canvas,ctx);">
 	<input type="submit" value="Predict" onclick="SendCanvasToServer(canvas)">
+	<h1>MNIST Mouse Drawn Digit Predictor</h1>
+	<h2>Draw a number between 1-9 in the canvas box above</h2>
+	<br><br><br>
+	<h3>Prediction is: </h3>
 	
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
