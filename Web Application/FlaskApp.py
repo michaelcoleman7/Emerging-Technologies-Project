@@ -35,6 +35,20 @@ def getImage():
     # Convert img returned to greyscale
     grayImg = cv2.cvtColor(imgcv2, cv2.COLOR_BGR2GRAY)
 
+    # Remove the rows and columns that are completly black from around the sides of the image, adapted from - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
+    while np.sum(grayImg[0]) == 0:
+        grayImg = grayImg[1:]
+
+    while np.sum(grayImg[:,0]) == 0:
+        grayImg = np.delete(grayImg,0,1)
+
+    while np.sum(grayImg[-1]) == 0:
+        grayImg = grayImg[:-1]
+
+    while np.sum(grayImg[:,-1]) == 0:
+        grayImg = np.delete(grayImg,-1,1)
+    rows,cols = grayImg.shape
+
 
     return ''
 
