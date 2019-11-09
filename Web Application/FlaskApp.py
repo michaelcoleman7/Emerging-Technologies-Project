@@ -49,6 +49,19 @@ def getImage():
         grayImg = np.delete(grayImg,-1,1)
     rows,cols = grayImg.shape
 
+    # Refactor in order to fit into a 20x20 image, adapted from - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
+    if rows > cols:
+        factor = 20.0/rows
+        rows = 20
+        cols = int(round(cols*factor))
+        grayImg = cv2.resize(grayImg, (cols,rows))
+    else:
+        factor = 20.0/cols
+        cols = 20
+        rows = int(round(rows*factor))
+        grayImg = cv2.resize(grayImg, (cols, rows))
+
+
 
     return ''
 
