@@ -61,6 +61,10 @@ def getImage():
         rows = int(round(rows*factor))
         grayImg = cv2.resize(grayImg, (cols, rows))
 
+    # Resize the image back to a 28x28 image by adding black rows and columns, adapted from - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
+    colsPadding = (int(math.ceil((28-cols)/2.0)),int(math.floor((28-cols)/2.0)))
+    rowsPadding = (int(math.ceil((28-rows)/2.0)),int(math.floor((28-rows)/2.0)))
+    grayImg = np.lib.pad(grayImg,(rowsPadding,colsPadding),'constant')
 
 
     return ''
