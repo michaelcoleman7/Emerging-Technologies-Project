@@ -71,13 +71,18 @@ def createModel():
 def predictImage(predictionImage):
     # Try/catch equivelant in python, adapted from https://www.pythonforbeginners.com/error-handling/python-try-and-except
     try:
+        # Try to load model saved - https://jovianlin.io/saving-loading-keras-models/
         model = load_model("model.h5")
+    # When no model exists call createModel() function to create new model
     except:
+        # Call the create model function
         model = createModel()
     
-    labelPredict = model.predict(predictionImage)
+    # Make a prediction on what the number drawn is
+    predict = model.predict(predictionImage)
     
-    return labelPredict.argmax()
+    # returns the largest value in the label
+    return predict.argmax()
 
 
 
