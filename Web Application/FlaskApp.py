@@ -66,7 +66,27 @@ def getImage():
     rowsPadding = (int(math.ceil((28-rows)/2.0)),int(math.floor((28-rows)/2.0)))
     grayImg = np.lib.pad(grayImg,(rowsPadding,colsPadding),'constant')
 
+    # Convert grey image to array for prediction
+    grayArray = ~np.array(list(grayImg)).reshape(1, 784).astype(np.uint8) /255
 
+
+    arrayElementCount = 0
+    #Print array out for testing by looping through each element
+    for i in grayArray[0]:
+        if i == 1:
+            # print without going to a new line - adapted from https://www.stechies.com/python-print-without-newline/
+            #print . if a one exists in array
+           print(".",end="")
+        else:
+            # Print 0 if array element not = 1
+            print("0",end="")
+        
+        arrayElementCount +=1
+
+        # If the count 28 then go to new line as image is 28x28
+        if arrayElementCount == 28:
+            print("\n")
+            arrayElementCount = 0
     return ''
 
 if __name__ == '__main__':
