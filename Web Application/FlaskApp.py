@@ -6,6 +6,7 @@ from io import BytesIO
 import re, base64
 import matplotlib.pyplot as plt
 import cv2
+from Model import predictImage
 
 app = Flask(__name__)
 
@@ -87,6 +88,15 @@ def getImage():
         if arrayElementCount == 28:
             print("\n")
             arrayElementCount = 0
+    
+    prediction = predictImage(grayArray)
+
+    print(prediction)
+
+    # Test image in greyscale
+    cv2.imshow('image',grayImg)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     return ''
 
 if __name__ == '__main__':
