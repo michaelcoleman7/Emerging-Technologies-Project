@@ -94,10 +94,10 @@ def getImage():
     print(prediction)
 
     # Test image in greyscale
-    cv2.imshow('image',grayImg)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    return ''
+    #cv2.imshow('image',grayImg)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
+    return str(prediction)
 
 if __name__ == '__main__':
     # Run the application 

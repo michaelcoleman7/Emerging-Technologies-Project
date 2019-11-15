@@ -23,7 +23,7 @@
 	<h1>MNIST Mouse Drawn Digit Predictor</h1>
 	<h2>Draw a number between 1-9 in the canvas box above</h2>
 	<br><br><br>
-	<h3>Prediction is: </h3>
+	<h3 id="prediction">Prediction is: </h3>
 	
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -105,10 +105,9 @@
 				data:{
 					imageBase64: dataURL
 				}
-			}).done(function() {
-				console.log('sent');
-			});
-
+			}).then(function(res)  {
+					$("#prediction").text("Prediction is: "+res);
+			}); 
 		}
 	</script>
   </body>
