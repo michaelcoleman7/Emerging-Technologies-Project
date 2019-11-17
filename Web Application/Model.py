@@ -8,18 +8,7 @@ import gzip
 import sklearn.preprocessing as pre
 
 def createModel():
-    # Start a neural network, building it by layers.
-    model = kr.models.Sequential()
-
-    # Add a hidden layer with 1000 neurons and an input layer with 784.
-    model.add(kr.layers.Dense(units=600, activation='linear', input_dim=784))
-    model.add(kr.layers.Dense(units=400, activation='relu'))
-    # Add a three neuron output layer.
-    model.add(kr.layers.Dense(units=10, activation='softmax'))
-
-    # Build the graph.
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-
+    
     #Read in all MNIST Data from dataset in folder /data , for training and test images
     with gzip.open('MNIST Data Files/train-images-idx3-ubyte.gz', 'rb') as f:
         train_img = f.read()
@@ -32,6 +21,18 @@ def createModel():
 
     with gzip.open('MNIST Data Files/t10k-labels-idx1-ubyte.gz', 'rb') as f:
         test_lbl = f.read()
+        
+    # Start a neural network, building it by layers.
+    model = kr.models.Sequential()
+
+    # Add a hidden layer with 1000 neurons and an input layer with 784.
+    model.add(kr.layers.Dense(units=600, activation='linear', input_dim=784))
+    model.add(kr.layers.Dense(units=400, activation='relu'))
+    # Add a three neuron output layer.
+    model.add(kr.layers.Dense(units=10, activation='softmax'))
+
+    # Build the graph.
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         
     # Initialize train images and labels
     train_img = ~np.array(list(train_img[16:])).reshape(60000, 28, 28).astype(np.uint8) / 255.0
