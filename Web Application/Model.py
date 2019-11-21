@@ -1,7 +1,6 @@
 # Imports
 import keras as kr
 from keras.layers import Dense, Dropout, Flatten
-from keras.datasets import mnist
 import matplotlib.pyplot as plt
 import numpy as np
 import gzip
@@ -9,7 +8,19 @@ import gzip
 import sklearn.preprocessing as pre
 
 def createModel():
-    (train_img, train_lbl), (test_img, test_lbl) = mnist.load_data()
+    
+    #Read in all MNIST Data from dataset in folder /data , for training and test images
+    with gzip.open('MNIST Data Files/train-images-idx3-ubyte.gz', 'rb') as f:
+        train_img = f.read()
+
+    with gzip.open('MNIST Data Files/train-labels-idx1-ubyte.gz', 'rb') as f:
+        train_lbl = f.read()
+
+    with gzip.open('MNIST Data Files/t10k-images-idx3-ubyte.gz', 'rb') as f:
+        test_img = f.read()
+
+    with gzip.open('MNIST Data Files/t10k-labels-idx1-ubyte.gz', 'rb') as f:
+        test_lbl = f.read()
         
     # Start a neural network, building it by layers.
     model = kr.models.Sequential()
@@ -41,11 +52,7 @@ def createModel():
     test_lbl =  np.array(list(test_lbl[ 8:])).astype(np.uint8)
 
     (encoder.inverse_transform(model.predict(test_img)) == test_lbl).sum()
-
-    # Test the model score and accuracy
-    score = model.evaluate(inputs, outputs, verbose=0)
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
+    
     # Save the entire model to a HDF5 file. - https://jovianlin.io/saving-loading-keras-models/
     # The '.h5' extension indicates that the model shuold be saved to HDF5.
     model.save('model.h5')
@@ -56,7 +63,7 @@ def predictImage(predictionImage):
     # Try/catch equivelant in python, adapted from https://www.pythonforbeginners.com/error-handling/python-try-and-except
     try:
         # Try to load model saved - https://jovianlin.io/saving-loading-keras-models/
-        model = load_model("model.h5")
+        model = kr.models.load_model("model.h5")
     # When no model exists call createModel() function to create new model
     except:
         # Call the create model function
