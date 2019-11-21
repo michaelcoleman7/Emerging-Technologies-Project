@@ -36,6 +36,10 @@ def getImage():
     # Convert img returned to greyscale
     grayImg = cv2.cvtColor(imgcv2, cv2.COLOR_BGR2GRAY)
 
+    # Added threshold to the image in order to turn coloured image pixels fully white - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
+    # (was grey colour previously causing prediction issues)
+    (thresh, grayImg) = cv2.threshold(grayImg, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+
     # Remove the rows and columns that are completly black from around the sides of the image, adapted from - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
     while np.sum(grayImg[0]) == 0:
         grayImg = grayImg[1:]
