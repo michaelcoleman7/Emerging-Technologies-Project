@@ -52,7 +52,11 @@ def createModel():
     test_lbl =  np.array(list(test_lbl[ 8:])).astype(np.uint8)
 
     (encoder.inverse_transform(model.predict(test_img)) == test_lbl).sum()
-    
+
+    # Test the model accuracy
+    scores = model.evaluate(inputs, outputs, verbose=0)
+    print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+
     # Save the entire model to a HDF5 file. - https://jovianlin.io/saving-loading-keras-models/
     # The '.h5' extension indicates that the model shuold be saved to HDF5.
     model.save('model.h5')
