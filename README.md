@@ -42,3 +42,26 @@ Note: All refernces to websites etc.. are displayed in references section.
 6. I then did some research on flask by looking at their website and creating a simple flask app that displayed a sample webpage, as this would be needed for the web application needed for the project. I did extra research into Flask as I planned on using it for my other year long project. After I did some research into canvas's in html and how they work as they were needed to allow the user to draw a number and send the canvas as an image. The next step was carrying this out in my actual project and passing it to my python code, I did some research into ajax requests to pass the image in base64 and read a few articles on http to refresh my knowledge on the topic. I also watched the videos on moodle after I had carried these out to ensure that I had done them correctly or in a similar way, which I had. I found the Pillow package through my research and used this to carry out the converion of the base64 image back to an image once sent to the flask application. This image then needed to be converted to greyscale, so I did some research into how I would convert an image from coloured to grey and found that the CV2 package would be best to carry out this task.
 
 7. Through re-reading the MNIST website, I realised I was converting my image to 28x28, which is the size of the MNIST dataset images, but forgot that the MNIST data is stored as a 20x20 image within a 28x28 container. So I did some research and read some MNIST examples which looked about how you would go about this. I also realised that my images where not a high enough threshold and therefore was effecting the results I was getting back and found a solution on the same article that I used to convert to (20x20 within 28x28). 
+
+
+## References
+- https://www.python.org/
+- http://diveintopython3.problemsolving.io/
+- https://keras.io/
+- https://www.tensorflow.org/
+- https://medium.com/octavian-ai/which-optimizer-and-learning-rate-should-i-use-for-deep-learning-5acb418f9b2
+- https://www.kaggle.com/adityaecdrid/mnist-with-keras-for-beginners-99457
+- https://keras.io/examples/mnist_cnn/
+- https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-from-scratch-for-mnist-handwritten-digit-classification/
+- http://yann.lecun.com/exdb/mnist/
+- https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
+- http://neuralnetworksanddeeplearning.com/chap1.html
+- https://medium.com/@hunterheidenreich/understanding-keras-dense-layers-2abadff9b990
+- https://keras.io/layers/about-keras-layers/
+- https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9
+- https://cloud.r-project.org/web/packages/keras/vignettes/about_keras_layers.html
+- https://towardsdatascience.com/exploring-activation-functions-for-neural-networks-73498da59b02
+- https://medium.com/@himanshuxd/activation-functions-sigmoid-relu-leaky-relu-and-softmax-basics-for-neural-networks-and-deep-8d9c70eed91e
+- https://palletsprojects.com/p/flask/
+- https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
+- https://www.jmarshall.com/easy/http/
