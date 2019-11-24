@@ -14,7 +14,7 @@ import sklearn.preprocessing as pre
 # Function to build the model
 def createModel():
     
-    #Read in all MNIST Data from dataset in folder /data , for training and test images
+    # Read in all MNIST Data from dataset in folder /MNIST Data Files , for training and test images
     with gzip.open('MNIST Data Files/train-images-idx3-ubyte.gz', 'rb') as f:
         train_img = f.read()
 
@@ -33,7 +33,7 @@ def createModel():
     # Add a hidden layer with 1000 neurons and an input layer with 784.
     model.add(kr.layers.Dense(units=600, activation='linear', input_dim=784))
     model.add(kr.layers.Dense(units=400, activation='relu'))
-    # Add a three neuron output layer.
+    # Add a 10 neuron output layer, representing 0-9
     model.add(kr.layers.Dense(units=10, activation='softmax'))
 
     # Build the graph.
