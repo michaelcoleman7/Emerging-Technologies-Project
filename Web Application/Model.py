@@ -1,12 +1,17 @@
 # Imports
+
+# API used for building the neural network
 import keras as kr
+# Used for building the model
 from keras.layers import Dense, Dropout, Flatten
-import matplotlib.pyplot as plt
+# Used for initialization of test and training images/labels (Conversion to numpy arrays)
 import numpy as np
+# Used for unzipping data sets
 import gzip
 # For encoding categorical variables.
 import sklearn.preprocessing as pre
 
+# Function to build the model
 def createModel():
     
     #Read in all MNIST Data from dataset in folder /data , for training and test images
@@ -34,11 +39,11 @@ def createModel():
     # Build the graph.
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         
-    # Initialize train images and labels
+    # Initialize train images and labels as numpy arrays
     train_img = ~np.array(list(train_img[16:])).reshape(60000, 28, 28).astype(np.uint8) / 255.0
     train_lbl =  np.array(list(train_lbl[ 8:])).astype(np.uint8)
 
-    #Set up input value for training
+    # Set up input value for training
     inputs = train_img.reshape(60000, 784)
 
     # Set up encoder and output values for training
@@ -46,14 +51,17 @@ def createModel():
     encoder.fit(train_lbl)
     outputs = encoder.transform(train_lbl)
 
+    # Train the model for a certain number of Epochs
     model.fit(inputs, outputs, epochs=10, batch_size=100)
         
+    # Initialize test images and labels as numpy arrays
     test_img = ~np.array(list(test_img[16:])).reshape(10000, 784).astype(np.uint8) / 255.0
     test_lbl =  np.array(list(test_lbl[ 8:])).astype(np.uint8)
 
+    # Calculate the amount of correct results by comparing test images to the labels
     (encoder.inverse_transform(model.predict(test_img)) == test_lbl).sum()
 
-    # Test the model accuracy
+    # Test the model accuracy - https://machinelearningmastery.com/save-load-keras-deep-learning-models/
     scores = model.evaluate(inputs, outputs, verbose=0)
     print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
@@ -61,8 +69,10 @@ def createModel():
     # The '.h5' extension indicates that the model shuold be saved to HDF5.
     model.save('model.h5')
     
+    # Return the model
     return model
 
+# Function to predict a specified image
 def predictImage(predictionImage):
     # Try/catch equivelant in python, adapted from https://www.pythonforbeginners.com/error-handling/python-try-and-except
     try:
