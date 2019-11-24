@@ -1,11 +1,18 @@
+# Import flask to run server
 from flask import Flask, render_template, request
+# Pillow used to convert returned data back into an image
 from PIL import Image
+# Used for conversion to numpy arrays aswell as removing edges from image returned
 import numpy as np
+# Used for adding padding to image to make 28x28 
 import math
+# Used for recreation of image from base64
 from io import BytesIO
+# Used in processing of base64 data
 import re, base64
-import matplotlib.pyplot as plt
+# used for greying of image as well as displaying of image for testing
 import cv2
+# Used for predicting image, called from model.py
 from Model import predictImage
 
 app = Flask(__name__)
@@ -23,24 +30,33 @@ def getImage():
 
     # Request image from html in base64 format
     image_b64 = request.values['imageBase64']
+    
+    # Replace irrelevant characters in base 64 string with nothing
     base64_data = re.sub('^data:image/.+;base64,', '', image_b64)
-    # Decode from base64
+    
+    # Decode from base64 string
     byte_data = base64.b64decode(base64_data) 
+
+    # Convert image back to image readable data
     image_data = BytesIO(byte_data)
+
     # Convert to PIL Image
     img = Image.open(image_data)
 
+    # Save image as a png
     img = img.save("predictImage.png")
+
+    # Reload image using cv2
     imgcv2 = cv2.imread("predictImage.png")
 
-    # Convert img returned to greyscale
+    # Convert reloaded img to greyscale
     grayImg = cv2.cvtColor(imgcv2, cv2.COLOR_BGR2GRAY)
 
     # Added threshold to the image in order to turn coloured image pixels fully white - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
     # (was grey colour previously causing prediction issues)
     (thresh, grayImg) = cv2.threshold(grayImg, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
-    # Remove the rows and columns that are completly black from around the sides of the image, adapted from - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
+    # Remove the rows and columns that are completely black from around the sides of the image, adapted from - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
     while np.sum(grayImg[0]) == 0:
         grayImg = grayImg[1:]
 
@@ -74,7 +90,6 @@ def getImage():
     # Convert grey image to array for prediction
     grayArray = ~np.array(list(grayImg)).reshape(1, 784).astype(np.uint8) /255
 
-
     arrayElementCount = 0
     #Print array out for testing by looping through each element
     for i in grayArray[0]:
@@ -86,21 +101,27 @@ def getImage():
             # Print 0 if array element not = 1
             print("0",end="")
         
+        # Add 1 to element count
         arrayElementCount +=1
 
         # If the count 28 then go to new line as image is 28x28
         if arrayElementCount == 28:
             print("\n")
+            # Reset element count
             arrayElementCount = 0
     
+    # Make a preiction of the image as an array via the function in model.py
     prediction = predictImage(grayArray)
 
+    # Print prediction to server
     print(prediction)
 
     # Test image in greyscale
     #cv2.imshow('image',grayImg)
     #cv2.waitKey(0)
     #cv2.destroyAllWindows()
+
+    # Return the prediction to the html page for display
     return str(prediction)
 
 if __name__ == '__main__':
