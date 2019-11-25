@@ -1,5 +1,6 @@
 # Import flask to run server
 from flask import Flask, render_template, request
+# Flask cors needed to allow return of prediction to html
 from flask_cors import CORS, cross_origin
 # Pillow used to convert returned data back into an image
 from PIL import Image
@@ -30,7 +31,8 @@ def webpage():
 
 # Map Route to get image data from canvas
 @app.route('/image', methods=['POST'])
-@cross_origin(origin='localhost',headers=['Content- Type','Authorization']) # - https://stackoverflow.com/a/28339918
+# cross origin headers needed to prevent blocking of returned data in request- https://stackoverflow.com/a/28339918
+@cross_origin(origin='localhost',headers=['Content- Type','Authorization']) 
 def getImage():
     # Convert base64 string to image - Adapted from https://github.com/python-pillow/Pillow/issues/3400
 
@@ -60,6 +62,7 @@ def getImage():
 
     # Added threshold to the image in order to turn coloured image pixels fully white - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
     # (was grey colour previously causing prediction issues)
+    # Also looked at to improve knowledge on thresholding: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_thresholding/py_thresholding.html
     (thresh, grayImg) = cv2.threshold(grayImg, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
     # Remove the rows and columns that are completely black from around the sides of the image, adapted from - https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
