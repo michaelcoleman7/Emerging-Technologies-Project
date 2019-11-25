@@ -107,6 +107,8 @@
 				}
 			}).then(function(res)  {
 					$("#prediction").text("Prediction is: "+res);
+			}).catch(err => {
+				$("#prediction").text("Error getting your prediction, please try again");
 			}); 
 		}
 	</script>

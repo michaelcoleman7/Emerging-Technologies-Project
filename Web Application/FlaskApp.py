@@ -1,5 +1,6 @@
 # Import flask to run server
 from flask import Flask, render_template, request
+from flask_cors import CORS, cross_origin
 # Pillow used to convert returned data back into an image
 from PIL import Image
 # Used for conversion to numpy arrays aswell as removing edges from image returned
@@ -17,6 +18,10 @@ from Model import predictImage
 
 app = Flask(__name__)
 
+# Fix for error Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at
+# http://127.0.0.1:5000/image. (Reason: CORS header ‘Access-Control-Allow-Origin’ missing). - https://stackoverflow.com/a/28339918
+cors = CORS(app, resources={r"/": {"origins": "http://localhost:5000"}})
+
 # Set up app.route decorator so runs webpage() function when user loads http://127.0.0.1:5000/
 @app.route('/')
 def webpage():
@@ -25,6 +30,7 @@ def webpage():
 
 # Map Route to get image data from canvas
 @app.route('/image', methods=['POST'])
+@cross_origin(origin='localhost',headers=['Content- Type','Authorization']) # - https://stackoverflow.com/a/28339918
 def getImage():
     # Convert base64 string to image - Adapted from https://github.com/python-pillow/Pillow/issues/3400
 
