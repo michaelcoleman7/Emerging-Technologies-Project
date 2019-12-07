@@ -125,11 +125,6 @@ def getImage():
     # Print prediction to server
     print(prediction)
 
-    # Test image in greyscale
-    #cv2.imshow('image',grayImg)
-    #cv2.waitKey(0)
-    #cv2.destroyAllWindows()
-
     # Return the prediction to the html page for display
     return str(prediction)
 
