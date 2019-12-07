@@ -17,6 +17,11 @@ Create,document,and train a model that recognises hand-written digits using the 
 
 ## How to Run/Use
 - Clone/Download repository
+- Download MNIST test and training files from: http://yann.lecun.com/exdb/mnist/ and place in MNIST data folder within Web Application folder.
+  - train-images-idx3-ubyte.gz
+  - train-labels-idx1-ubyte.gz
+   - t10k-images-idx3-ubyte.gz
+   - t10k-labels-idx1-ubyte.gz
 - cd into repository in a command line tool (e.g. cmder)
 - pip/conda install all necessary packages depending on command line tool you prefer to use. (e.g. conda install keras)
 - cd into Web Application directory.
